@@ -25,8 +25,9 @@ class Equipment {
       x: inputDataCoolingMode.tExternal,// C
       y: inputDataCoolingMode.tLiquidOutlet,// C
       tableAsDoubleArray: this.data.capacityTables_Qc
-    }) * coefflist.coolingMode.Qc,
+    }) * coefflist.coolingMode.Qc * coefflist.coolingMode.foulingFactor_Qc,
     Qh = 0;
+    //console.log(coefflist.coolingMode.foulingFactor);
     return { Qc, Qh }
   }
   getCorrectiveCoefficientlist(arg){
@@ -50,28 +51,97 @@ class Equipment {
         [4,   1.000,  1.000,  1.016,  1.034,  1.078,  1.125 ], // waterFlowModification
         [5,   0.0,    -3.0,   -7.0,   -13.0,  -22.0,  -35.0 ], // freezingPoint, C
       ],
-      Qc_coeff;
+      Qc_coeff, dPwc_coeff, dPwh_coeff = 0.0,
+      dataObj_foulingFactor_0086_coolingCapacity = [
+        [-1.0,   3.0,    4.0,    5.0,    6.0   ],
+        [0.0,   0.991,  0.994,  1.000,  1.004 ],
+        [600.0, 0.980,  0.983,  0.989,  0.998 ],
+        [1200.0,0.969,  0.971,  0.979,  0.987 ],
+        [1800.0,0.959,  0.962,  0.968,  0.974 ]
+      ],
+      foulingFactorC_coeff,
+      Lfc_coeff,
+      Pac_coeff;
     switch(inputDataCoolingMode.liquidType.split(' ')[0]){
       case 'MEG':
-        Qc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MEG, x: inputDataCoolingMode.percentage,
-          y: 1 });
-          //...
+        Qc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MEG, x: inputDataCoolingMode.percentage, y: 1 });
+        Pac_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MEG, x: inputDataCoolingMode.percentage, y: 2 });
+        dPwc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MEG, x: inputDataCoolingMode.percentage, y: 3 });
+        Lfc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MEG, x: inputDataCoolingMode.percentage, y: 4 });
+        //...
         break;
       case 'MPG':
-        Qc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MPG, x: inputDataCoolingMode.percentage,
-          y: 1 });
+        Qc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MPG, x: inputDataCoolingMode.percentage, y: 1 });
+        Pac_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MPG, x: inputDataCoolingMode.percentage, y: 2 });
+        dPwc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MPG, x: inputDataCoolingMode.percentage, y: 3 });
+        Lfc_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_MPG, x: inputDataCoolingMode.percentage, y: 4 });
         //...
         break;
       default: // WATER
         Qc_coeff = 1.000;
+        dPwc_coeff = 1.000;
+        Lfc_coeff = 1.000;
+        Pac_coeff = 1.000;
         //...
+        break;
+    }
+    switch (inputDataCoolingMode.foulingFactor) {
+      //case 0.018:
+      //case 0.044:
+      case 0.086: foulingFactorC_coeff = interpolate.byInternalTable({ tableAsDoubleArray: dataObj_foulingFactor_0086_coolingCapacity, x: inputDataCoolingMode.delta, y: inputDataCoolingMode.seaLevel }); break;
+      //case 0.172:
+      default: foulingFactorC_coeff = 1.0; break;
     }
     return {
       coolingMode: {
         Qc: Qc_coeff,
+        Pac: Pac_coeff,
+        dPw: dPwc_coeff,
+        foulingFactor_Qc: foulingFactorC_coeff,
+        Lf: Lfc_coeff,
         //...
       }
     }
+  }
+  getPressureDrop(arg) {
+    let {
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    } = arg,
+    coefflist = this.getCorrectiveCoefficientlist({
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    });
+    return { dPwc: (this.data.nominal.evaporator.waterPressureDrop * coefflist.coolingMode.dPw) }
+  }
+  getLiquidFlow(arg) {
+    let {
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    } = arg,
+    coefflist = this.getCorrectiveCoefficientlist({
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    });
+    return { Lfc: (this.data.nominal.evaporator.waterFlow * coefflist.coolingMode.Lf) }
+  }
+  getPowerInput(arg) {
+    let {
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    } = arg,
+    coefflist = this.getCorrectiveCoefficientlist({
+      inputDataCoolingMode,
+      //inputDataHeatingMode,
+    }),
+    Pac = interpolate.byInternalTable({
+      x: inputDataCoolingMode.tExternal,// C
+      y: inputDataCoolingMode.tLiquidOutlet,// C
+      tableAsDoubleArray: this.data.capacityTables_Pac
+    }) * coefflist.coolingMode.Pac,
+    Pah = 0;
+    //...
+    return { Pac, Pah }
   }
 };
 

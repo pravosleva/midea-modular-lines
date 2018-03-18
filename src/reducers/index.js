@@ -11,6 +11,8 @@ export default (
       liquidType: 'WATER 100',
       percentage: 100.0,
       delta: 5.0,
+
+      seaLevel: 0.0, foulingFactor: 0.086,
       //...
     },
     //...
@@ -20,7 +22,6 @@ export default (
   //console.log(action)
   switch (action.type) {
     case 'UPDATE_INPUT_DATA_COOLING_MODE': state.inputDataCoolingMode = action.inputDataCoolingMode; return state;
-    case 'UPDATE_TAB_STATE': state.hevaTabState = action.hevaTabState; return state;
     default: return state;
   }
 };

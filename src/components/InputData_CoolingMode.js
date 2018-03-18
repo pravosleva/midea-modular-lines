@@ -13,6 +13,8 @@ class InputParameters_CoolingMode extends Component {
       tLiquidInlet, tLiquidOutlet,
       liquidType, percentage,
       delta,
+
+      seaLevel, foulingFactor,
       //...
     } = this.props.obj.inputDataCoolingMode;
     //console.log(requiredCoolingCapacity);
@@ -33,6 +35,8 @@ class InputParameters_CoolingMode extends Component {
         delta = Number(e.target.value);
         tLiquidInlet = Number(tLiquidOutlet) + Number(delta);
         break;
+      case 'seaLevel': seaLevel = Number(e.target.value); break;
+      case 'foulingFactor': foulingFactor = Number(e.target.value); break;
       default: break;
     }
     this.props.updateInputParameters_CoolingMode({
@@ -41,6 +45,8 @@ class InputParameters_CoolingMode extends Component {
       tLiquidInlet, tLiquidOutlet,
       liquidType, percentage,
       delta,
+
+      seaLevel, foulingFactor,
       //...
     });
   }
@@ -51,6 +57,8 @@ class InputParameters_CoolingMode extends Component {
       tLiquidInlet, tLiquidOutlet,
       liquidType, percentage,
       delta,
+
+      seaLevel, foulingFactor,
       //...
     } = this.props.obj.inputDataCoolingMode;
     return (
@@ -130,6 +138,33 @@ class InputParameters_CoolingMode extends Component {
             <option value='6'>6</option>
           </select>
           <label className='mdl-textfield__label'>Delta t, C</label>{/* &#x0394; */}
+        </div>
+        <br />
+        <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
+          <select className='mdl-textfield__input'
+            defaultValue={seaLevel}
+            onChange={this.onChangeForm.bind(this, 'seaLevel')}
+            disabled={false}
+          >
+            <option value='0.0'>0 m</option>
+            <option value='600.0'>600 m</option>
+            <option value='1200.0'>1200 m</option>
+            <option value='1800.0'>1800 m</option>
+          </select>
+          <label className='mdl-textfield__label'>Sea level, m</label>{/* &#x0394; */}
+        </div>
+        <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
+          <select className='mdl-textfield__input'
+            defaultValue={foulingFactor}
+            onChange={this.onChangeForm.bind(this, 'foulingFactor')}
+            disabled={true}
+          >
+            <option value='0.018'>0.018</option>
+            <option value='0.044'>0.044</option>
+            <option value='0.086'>0.086</option>
+            <option value='0.172'>0.172</option>
+          </select>
+          <label className='mdl-textfield__label'>Fouling Factor, m<sup>2</sup>xC/kW</label>{/* &#x0394; */}
         </div>
 
       </div>

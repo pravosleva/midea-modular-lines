@@ -17,7 +17,6 @@ const render = () => {
     <App
       obj = {store.getState()}
       updateInputParameters_CoolingMode = {(fs) => store.dispatch({ type: 'UPDATE_INPUT_DATA_COOLING_MODE', inputDataCoolingMode: fs })}
-      updatehevaTabState = {(fs) => store.dispatch({ type: 'UPDATE_TAB_STATE', hevaTabState: fs })}
     />,
     document.getElementById('root')
   );
