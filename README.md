@@ -4,8 +4,14 @@
 - [ ] Models
 - [x] Qc & Qf calc
 - [ ] MEG & MPG factors
-- [ ] Fouling factor & Sea level & Difference of water inlet/outlet temp.
+  * [x] coolingCapacityModification
+  * [ ] powerModification
+  * [ ] waterResistanse
+  * [ ] waterFlowModification
+  * [ ] freezingPoint
+- [ ] Fouling factor by Sea level & Difference of water inlet/outlet temp.
 - [ ] Water flow. See also [Minimun and Maximum water flow rates](#minimun-and-maximum-water-flow-rates).
+- [ ] Water flow mcalculated variant by `liquid-parameters` module.
 - [ ] Electrical data
 - [ ] Imgs
 
@@ -26,7 +32,6 @@
 
 ### About design of the store tank in the system
 > kW is the Cooling Capacity unit, L is the unit for (G) minimum water flow in the formula.
-
 > Comfortable type air conditioner: `G= coolingCapacity x2.6 xL`
 > Process type cooling: `G= coolingCapacity x7.4 xL`
 
