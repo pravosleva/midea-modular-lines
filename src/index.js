@@ -17,6 +17,7 @@ const render = () => {
     <App
       obj = {store.getState()}
       updateInputParameters_CoolingMode = {(fs) => store.dispatch({ type: 'UPDATE_INPUT_DATA_COOLING_MODE', inputDataCoolingMode: fs })}
+      updateInputParameters_HeatingMode = {(fs) => store.dispatch({ type: 'UPDATE_INPUT_DATA_HEATING_MODE', inputDataHeatingMode: fs })}
     />,
     document.getElementById('root')
   );

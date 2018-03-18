@@ -2,7 +2,7 @@
   text-align: center;
 }
 h1, h2, h3, h4, h5, h6 { color: gray; /*font-family: 'Rock Salt',Sans-Serif;*/ }
-h5 { color: lightgray; }
+h5 { color: white; }
 body { font-family: Sans-Serif;
 
 }
@@ -18,6 +18,44 @@ body { font-family: Sans-Serif;
     margin: 0;
     padding: 20px 0;
 }
+
+/* FLEX els */
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+}
+
+.flex-block {
+  background: tomato;
+  padding: 5px;
+  padding-bottom: 25px;
+  width: 100%;
+  min-width: 280px;
+
+  margin-bottom: 10px;
+
+  line-height: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+}
+.txt-muted { opacity: .65; }
 
 /* CSS GRID */
 

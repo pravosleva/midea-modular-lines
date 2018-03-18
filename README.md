@@ -1,16 +1,16 @@
 # Midea Modular Chillers
 
 ## TODO
-- [ ] Models
+- [x] Models (5 pcs)
 - [x] `Qc` for Cooling mode
-- [ ] `Qh` for Heating mode
+- [x] `Qh` for Heating mode
 - [ ] MEG & MPG factors
   * [x] `coolingCapacityModification`
   * [x] `powerModification`
-  * [ ] `waterResistanse` (need to check)
+  * [x] `waterResistanse` (need to check)
   * [x] `waterFlowModification`
   * [ ] `freezingPoint`
-- [ ] Fouling factor by Sea level & Difference of water inlet/outlet temp.
+- [x] Fouling factor by Sea level & Difference of water inlet/outlet temp.
 - [ ] Water flow. See also [Minimun and Maximum water flow rates](#minimun-and-maximum-water-flow-rates).
 - [x] Water flow mcalculated variant by `liquid-parameters` module.
 - [ ] Electrical data
