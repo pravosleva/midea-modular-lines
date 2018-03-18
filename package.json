@@ -1,0 +1,20 @@
+{
+  "name": "midea-modular-lines",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "interpolate-by-pravosleva": "^1.1.5",
+    "liquid-parameters": "^0.1.2",
+    "material-design-lite": "^1.3.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
