@@ -2,13 +2,13 @@
 
 ## TODO
 - [ ] Models
-- [x] Qc & Qf calc
+- [x] `Qc` & `Qh`
 - [ ] MEG & MPG factors
-  * [x] coolingCapacityModification
-  * [ ] powerModification
-  * [ ] waterResistanse
-  * [ ] waterFlowModification
-  * [ ] freezingPoint
+  * [x] `coolingCapacityModification`
+  * [ ] `powerModification`
+  * [ ] `waterResistanse`
+  * [ ] `waterFlowModification`
+  * [ ] `freezingPoint`
 - [ ] Fouling factor by Sea level & Difference of water inlet/outlet temp.
 - [ ] Water flow. See also [Minimun and Maximum water flow rates](#minimun-and-maximum-water-flow-rates).
 - [ ] Water flow mcalculated variant by `liquid-parameters` module.
