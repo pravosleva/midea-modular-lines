@@ -7,6 +7,7 @@ import InputParameters_CoolingMode from './InputData_CoolingMode';
 import InputParameters_HeatingMode from './InputData_HeatingMode';
 
 import '../css/App.css';
+import '../css/blockquote.css';
 
 import { modellist } from '../models';
 
@@ -50,9 +51,11 @@ class App extends Component {
             </div>
 
             <blockquote>
-              cpc= {cpc.toFixed(2)} kJ/kg.K <span className='txt-muted'>(densityC= {densityC.toFixed(2)} kg/m3)</span><br />
-              cph= {cph.toFixed(2)} kJ/kg.K <span className='txt-muted'>(densityH= {densityH.toFixed(2)} kg/m3)</span><br />
-              ~<code>liquid-parameters module</code>
+              cp cooling = {cpc.toFixed(2)} kJ/kg.K<br />
+              cp heating = {cph.toFixed(2)} kJ/kg.K
+              <footer>
+                <cite><code>liquid-parameters</code> module*</cite>
+              </footer>
             </blockquote>
 
             <h4 style={{textAlign:'left'}}>Modellist</h4>
@@ -78,11 +81,14 @@ class App extends Component {
 
                   return(
                     <div className="flex-block" key={i}>
-                      <h5><strong>{e.model}</strong> Qc<span className='txt-muted'>/Qh</span>= {Qc.toFixed(1)}<span className='txt-muted'>/{Qh.toFixed(1)}</span> kW</h5>
+                      <h5><strong>{e.model}</strong></h5>
 
-                      <strong>Lfc<span className='txt-muted'>/Lfh</span>= {experimentalWaterFlowC.toFixed(1)}({Lfc.toFixed(1)})<span className='txt-muted'>/{experimentalWaterFlowH.toFixed(1)}</span> m3/h</strong> <span className='txt-muted'>by <code>liquid-parameters</code> module (& manufacturer data)</span><br />
-                      <strong>Pac<span className='txt-muted'>/Pah</span>= {Pac.toFixed(1)}<span className='txt-muted'>/{Pah.toFixed(1)}</span> kW</strong> <span className='txt-muted'>manufacturer data</span><br />
-                      <strong>dPwc= {dPwc.toFixed(1)} kPa</strong> <span className='txt-muted'>manufacturer data</span>
+                      <strong>Qc <span className='txt-muted'>/ Qh</span> = {Qc.toFixed(1)} <span className='txt-muted'>/ {Qh.toFixed(1)}</span> kW</strong><br /><br />
+
+                      <strong>Lfc* (Lfc) <span className='txt-muted'>/ Lfh</span> = {experimentalWaterFlowC.toFixed(1)} ({Lfc.toFixed(1)}) <span className='txt-muted'>/ {experimentalWaterFlowH.toFixed(1)}</span> m3/h</strong><br />
+
+                      <strong>dPwc = {dPwc.toFixed(1)} kPa</strong><br />
+                      <strong>Pac <span className='txt-muted'>/ Pah</span> = {Pac.toFixed(1)} <span className='txt-muted'>/ {Pah.toFixed(1)}</span> kW</strong>
 
                     </div>
                   )

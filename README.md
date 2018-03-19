@@ -1,5 +1,9 @@
 # Midea Modular Chillers
 
+## Demo
+
+You can try [life demo](http://selection4test.ru/projects/midea-lines).
+
 ## TODO
 - [x] Models (5 pcs)
 - [x] `Qc` for Cooling mode

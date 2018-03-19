@@ -52,8 +52,12 @@ body { font-family: Sans-Serif;
   line-height: 15px;
   color: white;
   font-weight: bold;
-  font-size: .9em;
+  font-size: 1.1em;
   text-align: center;
+
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 0 dimgray;
+
 }
 .txt-muted { opacity: .65; }
 
@@ -149,6 +153,8 @@ table.mdl-data-table {
 
   /* VISIBLE */
   .displayed-for-small-only { display: none !important; }
+
+  .flex-block { border-radius: 5px; }
 }
 @media (max-width: 600px) {
   .block-header {
