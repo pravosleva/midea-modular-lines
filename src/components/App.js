@@ -13,7 +13,26 @@ import { modellist } from '../models';
 
 import LiquidParameters from 'liquid-parameters';
 
+let _getRequiredPSCModules = (arg) => {
+  let { eachUnitCoolingCapacity, requiredCoolingCapacity, maximumCombinationQuantity } = arg,
+    result = 0, msg = 'No comment';
+  for(let i=1, max=maximumCombinationQuantity; i<max; i++){
+    if(eachUnitCoolingCapacity*i >= requiredCoolingCapacity){
+      result = i;
+      break;
+    }
+  }
+  if(result===0){ msg= `We have not result to have ${requiredCoolingCapacity} kW` }
+  return { result, msg };
+}
+
 class App extends Component {
+  componentWillMount () {
+    let { inputDataCoolingMode } = this.props.obj,
+      _qc = Number(localStorage.getItem('coolingCapacity')) || 0;
+    inputDataCoolingMode.requiredCoolingCapacity = _qc.toFixed(0);
+    this.props.updateInputParameters_CoolingMode(inputDataCoolingMode);
+  }
   render() {
     let { obj } = this.props,
       { inputDataCoolingMode, inputDataHeatingMode } = obj,
@@ -77,18 +96,54 @@ class App extends Component {
                     experimentalWaterFlowH = Qh * 3600 / (cph * densityH * Math.abs(inputDataHeatingMode.tLiquidInlet-inputDataHeatingMode.tLiquidOutlet) ),
                     powerInput = e.getPowerInput({ inputDataCoolingMode, inputDataHeatingMode }),
                     Pac = powerInput.Pac,
-                    Pah = powerInput.Pah;
+                    Pah = powerInput.Pah,
+                    _requirements = _getRequiredPSCModules({ eachUnitCoolingCapacity:Qc, requiredCoolingCapacity:inputDataCoolingMode.requiredCoolingCapacity, maximumCombinationQuantity:e.data.nominal.maximumCombinationQuantity });
 
                   return(
-                    <div className="flex-block" key={i}>
-                      <h5><strong>{e.model}</strong></h5>
+                    <div className="flex-block" key={i} style={{position: 'relative', paddingTop: '15px', paddingBottom: '40px'}}>
+                      <strong style={{
+                        position: 'absolute',
+                        fontSize: '2em',
+                        top: '15px', left: '5px',
+                        opacity: '.3',
+                      }}>{e.model}</strong>
 
-                      <strong>Qc <span className='txt-muted'>/ Qh</span> = {Qc.toFixed(1)} <span className='txt-muted'>/ {Qh.toFixed(1)}</span> kW</strong><br /><br />
+                      <h5><strong>Each Unit</strong></h5>
+                      <strong>Qc <span className='txt-muted'>/ Qh</span> = {Qc.toFixed(1)} <span className='txt-muted'>/ {Qh.toFixed(1)}</span> kW</strong><br />
 
                       <strong>Lfc* (Lfc) <span className='txt-muted'>/ Lfh</span> = {experimentalWaterFlowC.toFixed(1)} ({Lfc.toFixed(1)}) <span className='txt-muted'>/ {experimentalWaterFlowH.toFixed(1)}</span> m3/h</strong><br />
 
                       <strong>dPwc = {dPwc.toFixed(1)} kPa</strong><br />
                       <strong>Pac <span className='txt-muted'>/ Pah</span> = {Pac.toFixed(1)} <span className='txt-muted'>/ {Pah.toFixed(1)}</span> kW</strong>
+
+                      <h5><strong>Requirements</strong></h5>
+                      <strong>
+                        {_requirements.msg}.<br />
+                        Qc <span className='txt-muted'>/ Qh</span> x{_requirements.result} [of {e.data.nominal.maximumCombinationQuantity}] pcs = {(Qc*_requirements.result).toFixed(1)} <span className='txt-muted'>/ {(Qh*_requirements.result).toFixed(1)}</span> kW
+                      </strong>
+
+                      <strong style={{
+                        position: 'absolute',
+                        fontSize: '2em',
+                        bottom: '10px', right: '5px',
+                        opacity: '.3',
+                        textAlign: 'right',
+                        lineHeight: '30px',
+                      }}>
+                        <span className='displayed-for-small-only'>
+                          {/*
+                            sge_oe.name.length > 32 ?
+                            `${sge_oe.name.substring(0, 32)}...`
+                            :
+                            sge_oe.name
+                          */}
+                          MAX<br />{(Qc*e.data.nominal.maximumCombinationQuantity).toFixed(1)} <span className='txt-muted'>/ {(Qh*e.data.nominal.maximumCombinationQuantity).toFixed(1)}</span> kW
+                        </span>
+                        <span className='displayed-for-large-only'>
+                          Qc max <span className='txt-muted'>/ Qh max</span> = {(Qc*e.data.nominal.maximumCombinationQuantity).toFixed(1)} <span className='txt-muted'>/ {(Qh*e.data.nominal.maximumCombinationQuantity).toFixed(1)}</span> kW
+                        </span>
+
+                      </strong><br />
 
                     </div>
                   )

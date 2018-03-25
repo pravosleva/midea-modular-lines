@@ -66,6 +66,15 @@ class InputParameters_CoolingMode extends Component {
         <h4 style={{textAlign:'left'}}>Input Data</h4>
         <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
           <input className='mdl-textfield__input'
+            value={requiredCoolingCapacity}
+            onChange={this.onChangeForm.bind(this, 'requiredCoolingCapacity')}
+            type='number'
+            required
+          />
+          <label className='mdl-textfield__label'>Required Capacity, kW</label>
+        </div>
+        <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
+          <input className='mdl-textfield__input'
             value={tExternal}
             onChange={this.onChangeForm.bind(this, 'tExternal')}
             type='number'

@@ -136,7 +136,8 @@ let model1 = new Equipment ({
       ambientTemperature: {
         cooling: { min: -10.0, max: 46.0 },
         heating: { min: -15.0, max: 24.0 },
-      }
+      },
+      maximumCombinationQuantity: 16,
     }
   }
 });
@@ -274,7 +275,8 @@ let model2 = new Equipment ({
       ambientTemperature: {
         cooling: { min: -10.0, max: 46.0 },
         heating: { min: -15.0, max: 24.0 },
-      }
+      },
+      maximumCombinationQuantity: 16,
     }
   }
 });
@@ -412,7 +414,8 @@ let model3 = new Equipment ({
       ambientTemperature: {
         cooling: { min: -10.0, max: 46.0 },
         heating: { min: -15.0, max: 24.0 },
-      }
+      },
+      maximumCombinationQuantity: 16,
     }
   }
 });
@@ -550,7 +553,8 @@ let model4 = new Equipment ({
       ambientTemperature: {
         cooling: { min: -10.0, max: 46.0 },
         heating: { min: -15.0, max: 24.0 },
-      }
+      },
+      maximumCombinationQuantity: 16,
     }
   }
 });
